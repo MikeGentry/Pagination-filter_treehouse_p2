@@ -3,6 +3,10 @@ const eachStudent = pageList.children;
 const buttonDiv = document.querySelector('.pagination');
 const buttonUl = buttonDiv.querySelector('ul');
 const studentsPerPage = 10;
+const searchDiv = document.querySelector('.student-search');
+const searchInput = searchDiv.querySelector('input');
+const searchButton = searchDiv.querySelector('button');
+const noResultDiv = document.querySelector('.no-result');
 
 // Function to determine number of pages based on number of students
 function numberOfPages() {
@@ -32,8 +36,32 @@ function showFirstTen() {
     }
 }
 
+// Event listener for search box functionality
+// Array to hold number of hidden students
+const searchResults = [];
+searchButton.addEventListener('click', () => {
+    let filter = searchInput.value.toLowerCase();
+    searchResults.length = 0;
+    for (let i = 0; i < eachStudent.length; i++) {
+        if (eachStudent[i].innerHTML.indexOf(filter) > -1) {
+            eachStudent[i].style.display = '';
+            
+        } else {
+            eachStudent[i].style.display = 'none';
+            searchResults.push(i);
+        }   
+    }
+    // If all students are hidden, a 'no results' message is displayed
+    if (searchResults.length === eachStudent.length) {
+        noResultDiv.innerHTML = '<h1>No Results</h1>';
+    } else {
+        noResultDiv.innerHTML = ''; 
+    }
+});
+
 // Event listener to divide students between pages
 buttonDiv.addEventListener('click', (event) => {
+    noResultDiv.innerHTML = ''; 
     let buttonNumber = parseInt(event.target.textContent);
     let max = buttonNumber * 10; 
     let min = max - 10;
