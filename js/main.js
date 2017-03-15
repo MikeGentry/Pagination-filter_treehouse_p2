@@ -4,8 +4,6 @@ const buttonDiv = document.querySelector('.pagination');
 const buttonUl = buttonDiv.querySelector('ul');
 const studentsPerPage = 10;
 const searchDiv = document.querySelector('.student-search');
-const searchInput = searchDiv.querySelector('input');
-const searchButton = searchDiv.querySelector('button');
 const noResultDiv = document.querySelector('.no-result');
 
 // Function to determine number of pages based on number of students
@@ -34,6 +32,16 @@ function showFirstTen() {
             eachStudent[i].style.display = 'none';
         }
     }
+}
+
+// Function to display search box dynamically
+let searchInput = document.createElement('input');
+let searchButton = document.createElement('button');
+function showSearch() {
+    searchInput.placeholder = 'Search for students...';
+    searchButton.textContent = 'Search';
+    searchDiv.appendChild(searchInput);
+    searchDiv.appendChild(searchButton);
 }
 
 // Event listener for search box functionality
@@ -76,3 +84,6 @@ buttonDiv.addEventListener('click', (event) => {
 
 // Function call to display first ten students on load
 showFirstTen();
+
+// Function call to show search box if JavaScript is enabled
+showSearch();
